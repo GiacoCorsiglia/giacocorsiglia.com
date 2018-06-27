@@ -1,0 +1,13 @@
+{
+  "name": "giacocorsiglia.com",
+  "version": "0.0.0",
+  "author": "Giaco Corsiglia <GiacoCorsiglia@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "node-sass": "^4.9.0"
+  },
+  "scripts": {
+    "css:build": "node-sass --output-style=compressed styles/index.scss index.css",
+    "css:watch": "node-sass --watch --source-map-embed styles/index.scss index.css"
+  }
+}
