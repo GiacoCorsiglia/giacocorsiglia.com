@@ -4,10 +4,14 @@
   "author": "Giaco Corsiglia <GiacoCorsiglia@gmail.com>",
   "private": true,
   "dependencies": {
-    "node-sass": "^4.9.0"
+    "node-sass": "^4.9.0",
+    "pug-cli": "1.0.0-alpha6"
   },
   "scripts": {
-    "css:build": "node-sass --output-style=compressed styles/index.scss index.css",
-    "css:watch": "node-sass --watch --source-map-embed styles/index.scss index.css"
+    "css:build": "node-sass --output-style=compressed styles/index.scss public/index.css",
+    "css:watch": "node-sass --watch --source-map-embed styles/index.scss public/index.css",
+    "html:build": "pug templates/{index,portfolio}.pug --out public",
+    "html:watch": "pug templates/{index,portfolio}.pug --out public --watch",
+    "build": "yarn run css:build && yarn run html:build"
   }
 }

@@ -2,7 +2,8 @@
 node_modules
 
 # Build artifacts.
-index.css
+public/*.css
+public/*.html
 
 # General.
 .DS_Store

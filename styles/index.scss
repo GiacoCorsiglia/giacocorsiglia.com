@@ -37,8 +37,10 @@ html {
 
   color: #333;
 
-  // This approximates the Photo
-  background: linear-gradient(357deg, rgba(175,154,157,1) 0%, rgba(232,202,191,1) 25%, rgba(179,181,196,1) 100%);
+  &#home {
+    // This approximates the Photo
+    background: linear-gradient(357deg, rgba(175,154,157,1) 0%, rgba(232,202,191,1) 25%, rgba(179,181,196,1) 100%);
+  }
 }
 
 body {
@@ -46,12 +48,14 @@ body {
   font-size: .75rem;
   font-weight: 400;
 
-  @include large {
-    background-image: url("/sf.jpg");
-    background-size: cover;
-    background-position: center top;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+  html#home & {
+    @include large {
+      background-image: url("/images/sf.jpg");
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
   }
 }
 
@@ -85,3 +89,4 @@ main { flex-grow: 1; }
 // SECTIONS
 
 @import "home";
+@import "portfolio";
