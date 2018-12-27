@@ -28,61 +28,27 @@ ul { list-style: none; }
 
 // TYPOGRAPHY
 
+$regular: 400;
+$bold: 900;
+
 html {
-  // Set up 1rem to be one vertical rhythm unit.
-  font-size: 24px;
-  line-height: 24px;
-
-  font-family: Lato, "Trebuchet MS", sans-serif;
-
-  color: #333;
-
-  &#home {
-    // This approximates the Photo
-    background: linear-gradient(357deg, rgba(175,154,157,1) 0%, rgba(232,202,191,1) 25%, rgba(179,181,196,1) 100%);
-  }
+  // Set up 1rem to be one vertical rhythm unit (12px = .75 * 16px).
+  font-size: 75%;
 }
 
 body {
-  // Set the actual default font size (18px)
-  font-size: .75rem;
-  font-weight: 400;
+  // Set the actual default font size (16px)
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-family: Lato, "Trebuchet MS", sans-serif;
+  font-weight: $regular;
 
-  html#home & {
-    @include large {
-      background-image: url("/images/sf.jpg");
-      background-size: cover;
-      background-position: center top;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-    }
-  }
+  color: #333;
 }
 
 
 
 // LAYOUT
-
-body {
-  // Use this for the fancy sticky footer.
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-
-  @include small {
-    padding-left: .5rem;
-    padding-right: .5rem;
-  }
-}
-
-main { flex-grow: 1; }
-
-#footer {
-  flex-shrink: 0;
-  padding: 1rem 0;
-  text-align: center;
-  font-size: .5rem;
-}
 
 
 

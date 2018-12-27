@@ -1,13 +1,5 @@
 extends base.pug
 
-mixin sectionIntro(name, images)
-  div.section-intro
-    h2.section-intro__heading=name
-
-    each image in images
-      img.section-intro__image(src=image.src width="1440" height="900")
-
-
 block variables
   - var htmlId = "portfolio"
   - var title = "Portfolio - Giaco Corsiglia"
@@ -16,74 +8,4 @@ block variables
 
 block body
   main
-    p.
-      I have worked for three years as a software engineer and product designer at #[a(href="https://fareharbor.com") FareHarbor].   I contributed to numerous projects spanning multiple technologies and business areas.  Some highlights are listed here.
-    p.
-      Most projects fit in our core application, written in #[strong JavaScript] (Angular 1) and #[strong Python] (Django).  I also wrote a significant amount of #[strong PHP], and dabbled with #[strong TypeScript].
-    p.
-      FareHarbor offers reservation and accounting software alongside a suite of services designed to help tour and activity companies grow.  I collaborated closely with the rest of the product team—especially its leaders, #[a(href="https://bryanknauber.com") Bryan], #[a(href="http://mattbroten.com") Matt], and #[a(href="http://zachsnow.com") Zach].
-
-    section
-      +sectionIntro("The Timeline View", [
-        { src: "/images/screen.png" },
-      ])
-
-      p.
-        The Timeline View presents detailed inventory usage and availability over a given day.  It allows tour and activity operators to view their schedule at a glance, and provides an easy interface for booking new customers.
-      p.
-        I received this project as a prototype and saw it through to completion, adding and refining features along the way.  Product challenges included packing in information while retaining usability, and designing the popover interface for interacting with individual blocks on the timeline.
-      p.
-        Technical challenges included optimizing render performance, and both implementing and using the server API in a performant fashion.  Not to mention the CSS trickery that enables precisely positioned nodes to expand to an arbitrary height—and works in IE 10.
-
-    section
-      +sectionIntro("The Grid View", [
-        { src: "/images/screen.png" },
-      ])
-
-      p.
-        The Grid View provides a highly customizable schedule overview.  It supports organization across three axes (rows, columns, and groups), but retains the filtering functionality and the design of FareHarbor's previous monthly and daily agenda views.
-      p.
-        Like the Timeline View, I took this project from a prototype to its production-ready form.  It posed similar challenges.  The Grid is now the default schedule view for all new FareHarbor clients.  I'm especially proud of the mobile version (which Bryan designed).
-
-
-    section
-      +sectionIntro("FareHarbor Sites", [
-        { src: "/images/screen.png" },
-      ])
-
-      p.
-        FareHarbor Sites is a hosting platform with highly flexible templates designed for tourism companies.  Helping clients expand their businesses is FareHarbor's prime directive, and FH Sites helps supercharge their online presence.
-      p.
-        I joined FareHarbor to work on this project, which already hosted some 70 websites.  The existing templates were well-designed, but rigid, and could not keep up with the evolving needs of the growing client base.  I re-envisioned the product as a website builder supporting arbitrary organization of modular components.  I independently implemented this new feature set over several months, and continued to refine it.  FareHarbor Sites now powers nearly 700 websites; the number grows daily.
-      p.
-        FH Sites is built on WordPress.  The PHP code I wrote adheres strictly to object-oriented standards.  The platform handles over 1,000 requests per minute, and my custom page-caching implementation keeps response time low.  I helped migrate FH Sites to a multi-server infrastructure on Amazon Web Services, writing Nginx configuration and an Ansible-based deploy playbook.
-
-    section
-      +sectionIntro("The Embed Generator", [
-        { src: "/images/screen.png" },
-      ])
-
-      p.
-        FareHarbor's website embeds power online booking for thousands of companies.  But our clients have businesses to run; they don't have time to learn our JavaScript API!  So, I helped build the Embed Generator, a GUI for configuring book button and calendar embeds.
-
-    section
-      +sectionIntro("FareHarbor.com", [
-        { src: "/images/screen.png" },
-      ])
-
-      p.
-        I'm responsible for a good deal of the code—and some of the design direction—behind the public FareHarbor.com website.  FareHarbor offers a wide range of features and services.  The website seeks to guide new visitors to the things that interest them.  It additionally hosts the documentation center for existing clients.
-      p.
-        The FareHarbor website is translated into multiple languages and localized for several countries.  I implemented the logic behind this.
-
-    section
-      +sectionIntro("Other Projects", [
-        { src: "/images/screen.png" },
-      ])
-
-      p.
-        Like the website, the FareHarbor application is also internationalized.  I helped add support for translation as well as localized date, number, and currency formatting.
-      p.
-        I was also involved in several projects adding new ways to take or record payment in the application.
-      p.
-        As mentioned above, FareHarbor's JavaScript API powers embeds on tens of thousands of webpages.  I made several additions to this API, including the ability to maintain a consistent shopping cart state across multiple third-party iframes and page refreshes.
+    h1 Portfolio
