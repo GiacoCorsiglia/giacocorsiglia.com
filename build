@@ -1,0 +1,233 @@
+#!/usr/bin/env node
+const autoprefixer = require('autoprefixer');
+const childProcess = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const postcss = require('postcss');
+const pug = require('pug');
+const sass = require('node-sass');
+const util = require('util');
+
+
+const fsWriteFile = util.promisify(fs.writeFile);
+
+
+
+// SETTINGS
+
+const PAGES = [
+  'index',
+  'portfolio',
+  'portfolio/earlier',
+  'portfolio/fareharbor',
+];
+
+const OUTPUT_DIR = path.join(__dirname, 'public');
+const CSS_DIR = path.join(__dirname, 'styles');
+const HTML_DIR = path.join(__dirname, 'templates');
+const JS_DIR = path.join(__dirname, 'scripts');
+
+
+
+// SCRIPT
+
+const options = parseOptions();
+
+if (options.clean) {
+  handleClean();
+  success('Removed build artifacts.');
+  process.exit();
+}
+
+if (options.watch) {
+  info('Watching for changes.\n');
+}
+
+if (options.css) {
+  handleCss(options.watch, options.dev);
+}
+
+if (options.html) {
+  handleHtml(options.watch, options.dev);
+}
+
+
+
+// OPTIONS
+
+function parseOptions() {
+  const args = process.argv.slice(2);
+
+  let watch = args.includes('--watch');
+  let dev = watch || !args.includes('--prod');
+
+  let css = args.includes('--css');
+  let html = args.includes('--html');
+  let js = args.includes('--js');
+  if (!css && !html && !js) {
+    css = html = js = true;
+  }
+
+  const clean = args.includes('--clean');
+  if (clean) {
+    watch = css = html = js = false;
+  }
+
+  return { clean, dev, watch, css, html, js, };
+}
+
+
+
+// CLEAN
+
+function handleClean() {
+  const commands = [
+    'find . \\( -name "*.css" -or -name "*.html" -or -name "*.js" -or -name "*.map" \\) -and -type f -delete',
+    'find . -type d -empty -delete',
+  ];
+  childProcess.execSync(commands.join(';'), { cwd: OUTPUT_DIR });
+}
+
+
+
+// CSS
+
+function handleCss(watch, dev) {
+  const inFile = path.join(CSS_DIR, 'index.scss');
+  const outFile = path.join(OUTPUT_DIR, 'index.css');
+
+  const sassRender = util.promisify(sass.render);
+  const postcssProcessor = postcss([ autoprefixer({ browsers: 'cover 99.5%' }) ]);
+
+  function build() {
+    return sassRender({
+      file: inFile,
+      outputStyle: dev ? 'nested' : 'compressed',
+      outFile,
+      sourceMap: dev ? `${outFile}.map` : false,
+    })
+      .then(result => postcssProcessor.process(result.css, {
+        from: inFile,
+        to: outFile,
+        map: !dev ? false : {
+          prev: JSON.parse(result.map),
+          inline: false,
+        }
+      }), errorHandler('SASS Compilation Error'))
+      .then(result => {
+        const promises = [fsWriteFile(outFile, result.css)];
+        if (dev) {
+          promises.push(fsWriteFile(`${outFile}.map`, result.map));
+        }
+        return Promise.all(promises);
+      }, errorHandler('PostCSS Error'))
+      .then(() => success('Compiled CSS.\n'), errorHandler('CSS FS error.'))
+      .catch(errorCatcher);
+  }
+
+  build();
+
+  if (!watch) {
+    return;
+  }
+
+  fs.watch(CSS_DIR, { recursive: true }, (event, filename) => {
+    info(`Rebuilding CSS due to: (${event}, ${filename}).`)
+    build();
+  });
+}
+
+
+
+// HTML
+
+function handleHtml(watch, dev) {
+  const pageDependencies = PAGES.reduce((deps, page) => {
+    deps[page] = [];
+    return deps;
+  }, {});
+
+  function buildPage(page) {
+    const template = `${page}.pug`;
+    const templatePath = path.join(HTML_DIR, template);
+    const outFile = path.join(OUTPUT_DIR, `${page}.html`);
+
+    const dir = path.dirname(outFile);
+    fs.mkdirSync(dir, { recursive: true });
+
+    let templateFn;
+    try {
+      templateFn = pug.compileFile(templatePath, {
+        filename: template,
+        basedir: HTML_DIR,
+      });
+    } catch (e) {
+      error(`HTML Compilation Error (${page}):`, '\n\n', e, '\n');
+      return Promise.resolve(); // Just creates a new line after this.
+    }
+
+    pageDependencies[page] = templateFn.dependencies;
+
+    return fsWriteFile(outFile, templateFn()).then(() => success(`Compiled HTML: ${page}.`), errorHandler('HTML FS Error'));
+  }
+
+  Promise.all(PAGES.map(buildPage)).then(() => console.log())
+
+  if (!watch) {
+    return;
+  }
+
+  fs.watch(HTML_DIR, { recursive: true }, (event, filename) => {
+    info(`Rebuilding HTML due to: (${event}, ${filename}).`)
+
+    const filePath = path.join(HTML_DIR, filename);
+
+    const promises = PAGES.filter(page => {
+      const is = `${page}.pug` === filename
+      const depends = pageDependencies[page].includes(filePath);
+      return is || depends;
+    }).map(buildPage);
+
+    if (promises.length) {
+      Promise.all(promises).then(() => console.log());
+    }
+    else {
+      success('No HTML compilation required.\n');
+    }
+  });
+}
+
+
+
+// UTILITIES
+
+function success(message, ...info) {
+  console.log(`\x1b[32m✔ ${message}\x1b[0m`, ...info);
+}
+
+function info(message) {
+  console.log(`\x1b[36m${message}\x1b[0m`);
+}
+
+function error(message, ...info) {
+  console.error(`\x1b[31m✘ ${message}\x1b[0m`, ...info);
+}
+
+const shortCircuitPromise = new Error('Short-circuit promise chain');
+function errorHandler(label) {
+  return e => {
+    if (e !== shortCircuitPromise) {
+      error(label, '\n\n', e, '\n');
+    }
+    throw shortCircuitPromise;
+  };
+}
+
+function errorCatcher() {
+  return e => {
+    if (e !== shortCircuitPromise) {
+      throw err;
+    }
+    // else, already handled.
+  };
+}
