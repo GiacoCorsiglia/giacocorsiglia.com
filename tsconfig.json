@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outFile": "./public/index.js",
+    "strict": true,
+    "removeComments": true,
+    "target": "es5"
+  },
+  "include": [
+    "scripts/**/*.ts"
+  ],
+}

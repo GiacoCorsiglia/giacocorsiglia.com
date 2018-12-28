@@ -25,7 +25,6 @@ const PAGES = [
 const OUTPUT_DIR = path.join(__dirname, 'public');
 const CSS_DIR = path.join(__dirname, 'styles');
 const HTML_DIR = path.join(__dirname, 'templates');
-const JS_DIR = path.join(__dirname, 'scripts');
 
 
 
@@ -51,6 +50,9 @@ if (options.html) {
   handleHtml(options.watch, options.dev);
 }
 
+if (options.js) {
+  handleJs();
+}
 
 
 // OPTIONS
@@ -63,9 +65,16 @@ function parseOptions() {
 
   let css = args.includes('--css');
   let html = args.includes('--html');
+  if (!css && !html) {
+    css = html = true;
+  }
   let js = args.includes('--js');
-  if (!css && !html && !js) {
-    css = html = js = true;
+  if (js && watch) {
+    error('Cannot use --js and --watch at the same time; use ./serve');
+    process.exit(1);
+  }
+  if (!js && !watch) {
+    js = true;
   }
 
   const clean = args.includes('--clean');
@@ -105,6 +114,7 @@ function handleCss(watch, dev) {
       outputStyle: dev ? 'nested' : 'compressed',
       outFile,
       sourceMap: dev ? `${outFile}.map` : false,
+      sourceMapRoot: 'http://localhost:8888/styles/'
     })
       .then(result => postcssProcessor.process(result.css, {
         from: inFile,
@@ -195,6 +205,15 @@ function handleHtml(watch, dev) {
       success('No HTML compilation required.\n');
     }
   });
+}
+
+
+
+// JS
+
+function handleJs() {
+  childProcess.execSync('./node_modules/.bin/tsc');
+  success('Compiled JS.\n');
 }
 
 

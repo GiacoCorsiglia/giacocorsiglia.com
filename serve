@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-php -S localhost:8000 -t public
+php -S localhost:8000 -t public & # Serve content
+php -S localhost:8888 -t . & # Serve source files
+./build --watch &
+./node_modules/.bin/tsc --watch --preserveWatchOutput --sourceMap --sourceRoot "http://localhost:8888/scripts"
