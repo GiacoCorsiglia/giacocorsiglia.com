@@ -65,16 +65,16 @@ function parseOptions() {
 
   let css = args.includes('--css');
   let html = args.includes('--html');
-  if (!css && !html) {
-    css = html = true;
-  }
   let js = args.includes('--js');
   if (js && watch) {
     error('Cannot use --js and --watch at the same time; use ./serve');
     process.exit(1);
   }
-  if (!js && !watch) {
-    js = true;
+  if (!js && !css && !html) {
+    css = html = true;
+    if (!watch) {
+      js = true;
+    }
   }
 
   const clean = args.includes('--clean');
