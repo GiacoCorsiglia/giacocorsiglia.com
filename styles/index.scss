@@ -1,3 +1,8 @@
+@import "svg-helper";
+@import "baseline-overlay";
+
+
+
 // RESET
 
 * {
@@ -26,10 +31,20 @@ ul { list-style: none; }
 
 
 
+// COLORS
+
+$purple: #4700A0;
+$fareharbor-blue: #0A6ECE;
+$text-dark: #333;
+$text-light: #fff;
+
+
+
 // TYPOGRAPHY
 
 $regular: 400;
 $bold: 900;
+$text-small: 1.166667rem; // 14px
 
 html {
   // Set up 1rem to be one vertical rhythm unit (12px = .75 * 16px).
@@ -42,13 +57,25 @@ body {
   line-height: 2rem;
   font-family: Lato, "Trebuchet MS", sans-serif;
   font-weight: $regular;
+  color: $text-dark;
+}
 
-  color: #333;
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
 }
 
 
 
 // LAYOUT
+
+footer {
+  padding-bottom: 2rem;
+  font-size: $text-small;
+  opacity: .75;
+}
 
 
 
