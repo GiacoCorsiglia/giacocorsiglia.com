@@ -7,6 +7,9 @@ public/**/*.html
 public/**/*.js
 public/**/*.map
 
+# For now:
+public/assets
+
 # General.
 .DS_Store
 *.map
