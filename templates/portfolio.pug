@@ -7,5 +7,26 @@ block variables
   - var description = "Giaco Corsiglia’s web development portfolio."
 
 block body
+  header
+    ol.breadcrumb
+      li: a(href="/") Giaco Corsiglia
+      li: span Portfolio
+
+    p#intro.
+      I have a good bit of experience designing and programming websites.
+      My career as a software engineer is on hold, however, as I pursue a
+      graduate degree in physics.  Nonetheless, examples of my work can be
+      browsed below, divided into two categories:
+
   main
-    h1 Portfolio
+    nav
+      ul
+        li
+          a(href="/portfolio/fareharbor")
+            p.heading Software Engineer @ FareHarbor
+            p.description September 2015–July 2018
+
+        li
+          a(href="/portfolio/earlier")
+            p.heading Earlier web development work
+            p.description Starting in 2010

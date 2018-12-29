@@ -29,7 +29,8 @@ html(lang="en", id=htmlId)
     - var fontWeights = '400,900'
     link(
       href="https://fonts.googleapis.com/css?family=Lato:" + fontWeights,
-      rel="stylesheet"
+      rel="stylesheet",
+      onload="document.body.className += ' js-fonts-loaded';"
     )
 
     block body
