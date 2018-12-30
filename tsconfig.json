@@ -2,11 +2,14 @@
   "compilerOptions": {
     "module": "AMD",
     "outFile": "./public/index.js",
+    "jsx": "react",
+    "jsxFactory": "SimpleDOM.createElement",
     "strict": true,
     "removeComments": true,
     "target": "es5"
   },
   "include": [
-    "scripts/**/*.ts"
+    "scripts/**/*.ts",
+    "scripts/**/*.tsx",
   ],
 }
