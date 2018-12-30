@@ -1,5 +1,7 @@
 extends ../base.pug
 
+include ../images.pug
+
 block variables
   - var htmlId = "earlier"
   - var title = "Earlier Web Work - Giaco Corsiglia"
@@ -7,5 +9,40 @@ block variables
   - var description = "Giaco Corsiglia’s earlier web design work."
 
 block body
+  header
+    ol.breadcrumb
+      li: a(href="/") Giaco Corsiglia
+      li: a(href="/portfolio") Portfolio
+      li: h1 Earlier Work
+
   main
-    h1 Earlier
+    section
+      p.section-intro.
+        I worked intermittently—but fruitfully—with
+        #[a(href="http://lbgdesign.com"): b LBG Design].
+        In particular, I wrote code for the three websites below.
+        Each has been online for years, and each is configured with a content
+        management system such as WordPress, allowing for easy&nbsp;editing.
+
+      ul#lbg-design-stripe
+        li.portfolio-item
+          a(href="https://gobuzzword.com").portfolio-image
+            +image('earlier/buzzword', 'png', 574, 358, 576, 'Screenshot of BuzzWord website, gobuzzword.com')
+
+        li.portfolio-item
+          a(href="http://www.williammonical.com").portfolio-image
+            +image('earlier/william-monical', 'jpg', 574, 358, 576, 'Screenshot of the William Monical website, williammonical.com')
+
+        li.portfolio-item
+          a(href="https://carriagehousepaper.com").portfolio-image
+            +image('earlier/chp', 'jpg', 574, 358, 576, 'Screenshot of the Carriage House Paper website, carriagehousepaper.com')
+
+    section#zilabrand-section
+      p.
+        I also put together a portfolio site for#[br]
+        seamstress and artist Zila&nbsp;Brand.
+
+      ul
+        li.portfolio-item
+          a(href="https://zilabrand.com").portfolio-image
+            +image('earlier/zilabrand', 'jpg', 862, 502, 864, 'Screenshot of Zila Brand’s website, zilabrand.com')

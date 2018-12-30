@@ -95,5 +95,11 @@
     &:hover { opacity: 1; }
   }
 
-  span { opacity: $opacity; }
+  h1, span { opacity: $opacity; }
+
+  h1 {
+    display: inline;
+    font-size: inherit;
+    font-weight: inherit;
+  }
 }
