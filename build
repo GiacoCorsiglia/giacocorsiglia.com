@@ -178,7 +178,15 @@ function handleHtml(watch, dev) {
 
     pageDependencies[page] = templateFn.dependencies;
 
-    return fsWriteFile(outFile, templateFn()).then(() => success(`Compiled HTML: ${page}.`), errorHandler('HTML FS Error'));
+    let output;
+    try {
+      output = templateFn();
+    } catch (e) {
+      error(`HTML Compilation Error (${page}):`, '\n\n', e, '\n');
+      return Promise.resolve(); // Just creates a new line after this.
+    }
+
+    return fsWriteFile(outFile, output).then(() => success(`Compiled HTML: ${page}.`), errorHandler('HTML FS Error'));
   }
 
   Promise.all(PAGES.map(buildPage)).then(() => console.log())
