@@ -1,0 +1,11 @@
+mixin image(name, ext, width, height, breakpoint, alt)
+  - const src_1x = `/assets/${name}.${ext}`
+  - const src_2x = `/assets/${name}@2x.${ext}`
+  img(
+    src=src_1x,
+    width=width,
+    height=height,
+    srcset=`${src_1x} ${width}w, ${src_2x} ${width * 2}w`,
+    sizes=`(min-width: ${breakpoint}px) ${width}px, 100vw`,
+    alt=alt
+  )
