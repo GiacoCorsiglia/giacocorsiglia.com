@@ -39,13 +39,16 @@
     }
   }
 
-  .breadcrumb { max-width: 100%; }
+  .breadcrumb {
+    max-width: 100%;
+  }
 
   h1 {
     margin-top: 5rem;
   }
 
-  header, main {
+  header,
+  main {
     p:not(:last-of-type) {
       margin-bottom: 2rem;
     }
@@ -65,7 +68,7 @@
         color: $text-dark;
 
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           top: 0;
           left: 0;
@@ -84,12 +87,12 @@
     }
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     font-size: 4rem;
     line-height: 4rem;
     margin-bottom: 2rem;
   }
-
 
   aside {
     color: $text-light;
@@ -123,7 +126,6 @@
 #grid,
 #embed-generator,
 #content {
-
   .section-content {
     display: grid;
     // Text column, figure column
@@ -150,7 +152,8 @@
   padding-top: 12rem;
   padding-bottom: 12rem;
 
-  h2, .columns {
+  h2,
+  .columns {
     max-width: 14 * 6rem;
     margin-left: auto;
     margin-right: auto;
@@ -194,9 +197,10 @@
     grid-column-gap: 4rem;
   }
 
-  .image-container { margin: 1rem 0 2rem; }
+  .image-container {
+    margin: 1rem 0 2rem;
+  }
 }
-
 
 .gallery {
   $controls-height: 2rem;
@@ -206,7 +210,7 @@
   position: relative;
 
   .image-container {
-    border: 1px solid #DDE1E4;
+    border: 1px solid #dde1e4;
     border-radius: 3px;
     overflow: hidden;
     background: #fff;
@@ -215,11 +219,15 @@
   &.multiple-slides {
     padding-top: $controls-height;
 
-    .image-container { border-top-left-radius: 0; }
+    .image-container {
+      border-top-left-radius: 0;
+    }
   }
 
   &:not(.ready) {
-    .gallery__slide:not(:first-child) { display: none; }
+    .gallery__slide:not(:first-child) {
+      display: none;
+    }
   }
 
   &.ready {
@@ -266,9 +274,9 @@
     display: flex;
     align-content: stretch;
 
-    background: #FFFFFF;
+    background: #ffffff;
     border-style: solid;
-    border-color: #DDE1E4;
+    border-color: #dde1e4;
     border-width: 1px 1px 0 1px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -280,7 +288,9 @@
       font-size: 1px;
       color: transparent;
 
-      &:focus { outline: none; }
+      &:focus {
+        outline: none;
+      }
     }
 
     &__slide {
@@ -293,19 +303,19 @@
       cursor: pointer;
 
       &-first {
-        width: .5rem + 1.5rem;
-        padding-left: .5rem;
+        width: 0.5rem + 1.5rem;
+        padding-left: 0.5rem;
       }
 
       &-last {
-        width: 1.5rem + .5rem;
-        padding-right: .5rem;
+        width: 1.5rem + 0.5rem;
+        padding-right: 0.5rem;
       }
 
       span {
         display: block;
-        height: .5rem;
-        width: .5rem;
+        height: 0.5rem;
+        width: 0.5rem;
         border-style: solid;
         border-width: 1px;
         border-radius: 50%;
@@ -316,7 +326,9 @@
       }
 
       &:hover {
-        span { transition-duration: 0; }
+        span {
+          transition-duration: 0;
+        }
       }
 
       &-active {
@@ -326,12 +338,16 @@
         }
 
         &:focus {
-          span { border-color: $fareharbor-blue; }
+          span {
+            border-color: $fareharbor-blue;
+          }
         }
       }
 
       &:not(&-active) {
-        span { border-color: #979797; }
+        span {
+          border-color: #979797;
+        }
 
         &:hover,
         &:focus,
@@ -347,11 +363,11 @@
     &__play,
     &__pause,
     &__fullscreen {
-      width: 1rem + .66666666rem + 1rem;
+      width: 1rem + 0.66666666rem + 1rem;
       padding-left: 1rem;
       padding-right: 1rem;
       // `!important` specificity hack due to too-clever SCSS nesting.
-      border-left: 1px solid #DDE1E4 !important;
+      border-left: 1px solid #dde1e4 !important;
       background-repeat: no-repeat;
       background-position: center center;
       cursor: pointer;
@@ -359,7 +375,9 @@
 
     &__play,
     &__pause {
-      &:disabled { display: none; }
+      &:disabled {
+        display: none;
+      }
     }
 
     &__play {
@@ -372,7 +390,7 @@
       }
     }
 
-    &__pause{
+    &__pause {
       background-image: url("data:image/svg+xml,%3csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23979797' fill-rule='evenodd'%3e%3cpath stroke='%23979797' d='M.5.5h2v7h-2z'/%3e%3cpath d='M5 0h3v8H5z'/%3e%3c/g%3e%3c/svg%3e");
 
       &:hover,
