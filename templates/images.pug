@@ -8,4 +8,4 @@ mixin image(name, ext, width, height, breakpoint, alt)
     srcset=`${src_1x} ${width}w, ${src_2x} ${width * 2}w`,
     sizes=`(min-width: ${breakpoint}px) ${width}px, 100vw`,
     alt=alt
-  )
+  )&attributes(attributes)

@@ -115,11 +115,6 @@
       display: block;
       max-width: 100%;
       height: auto;
-
-      // TODO: make slideshows a thing!
-      &:not(:first-child) {
-        display: none;
-      }
     }
   }
 }
@@ -205,18 +200,61 @@
 
 .gallery {
   $controls-height: 2rem;
+  $transition-duration: 450ms;
+  $transition-easing: ease-in-out;
+
   position: relative;
 
   .image-container {
     border: 1px solid #DDE1E4;
     border-radius: 3px;
     overflow: hidden;
+    background: #fff;
   }
 
   &.multiple-slides {
     padding-top: $controls-height;
 
     .image-container { border-top-left-radius: 0; }
+  }
+
+  &:not(.ready) {
+    .gallery__slide:not(:first-child) { display: none; }
+  }
+
+  &.ready {
+    .image-container {
+      position: relative;
+    }
+
+    .gallery__slide {
+      &.gallery__slide--spacer {
+        visibility: hidden;
+      }
+
+      &:not(.gallery__slide--spacer) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        z-index: 1;
+        opacity: 0;
+
+        transition: opacity $transition-duration $transition-easing;
+      }
+
+      &.transitioning-out {
+        z-index: 2;
+        opacity: 1;
+      }
+
+      &.active {
+        z-index: 3;
+        opacity: 1;
+      }
+    }
   }
 
   &__controls {
@@ -271,6 +309,14 @@
         border-style: solid;
         border-width: 1px;
         border-radius: 50%;
+
+        transition-property: background-color, border-color;
+        transition-duration: $transition-duration;
+        transition-timing-function: $transition-easing;
+      }
+
+      &:hover {
+        span { transition-duration: 0; }
       }
 
       &-active {

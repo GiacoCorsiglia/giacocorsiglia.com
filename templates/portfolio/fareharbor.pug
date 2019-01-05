@@ -38,7 +38,7 @@ mixin gallery(slides)
     .image-container
       each slide in slides
         - const [name, ext, alt] = slide
-        +image(`fareharbor/${name}`, ext, 1040, 538, 1042, alt)
+        +image(`fareharbor/${name}`, ext, 1040, 538, 1042, alt).gallery__slide
 
 
 block body
