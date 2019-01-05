@@ -10,19 +10,29 @@ interface Window {
   define: (id: string, dependencies: string[], factory: Function) => any;
 }
 
-(function(){
-  const registry: { [id: string]: {
-    dependencyIds: string[];
-    factory: Function;
-  } } = {};
+(function() {
+  const registry: {
+    [id: string]: {
+      dependencyIds: string[];
+      factory: Function;
+    };
+  } = {};
 
   const instances: { [id: string]: object } = {};
 
   window.require = instances.require = function require(id: string): object {
+    if (instances[id]) {
+      return instances[id];
+    }
+
+    if (!registry[id]) {
+      return {};
+    }
+
     instances[id] = {};
 
     const dependencies = registry[id].dependencyIds.map(function(dependencyId) {
-      if (dependencyId === 'exports') {
+      if (dependencyId === "exports") {
         return instances[id];
       }
 
@@ -32,9 +42,13 @@ interface Window {
     registry[id].factory.apply(null, dependencies);
 
     return instances[id];
-  }
+  };
 
-  window.define = function(id: string, dependencyIds: string[], factory: Function): void {
+  window.define = function(
+    id: string,
+    dependencyIds: string[],
+    factory: Function
+  ): void {
     registry[id] = { dependencyIds, factory };
   };
 })();
