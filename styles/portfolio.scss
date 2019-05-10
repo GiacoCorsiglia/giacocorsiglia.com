@@ -2,7 +2,8 @@
   background: $purple;
 
   #intro {
-    max-width: 36rem;
+    padding: 0 1rem;
+    max-width: 36rem + 2rem;
     margin: 4rem auto;
 
     color: $text-light;
@@ -10,8 +11,7 @@
 
   nav a {
     display: block;
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding: 6rem 0;
 
     transform: skewY(3deg);
     > * {
@@ -19,7 +19,8 @@
     }
 
     p {
-      max-width: 36rem;
+      padding: 0 1rem;
+      max-width: 36rem + 2rem;
       margin: 0 auto;
     }
 
@@ -36,7 +37,12 @@
         width: 2rem;
         height: 3rem;
         top: 0.6rem;
-        right: 11rem;
+        @include large {
+          right: 13rem;
+        }
+        @include small {
+          right: 1rem;
+        }
         background-position: center;
         background-repeat: no-repeat;
       }
@@ -67,7 +73,8 @@
   }
 
   footer {
-    max-width: 36rem;
+    padding: 0 1rem;
+    max-width: 36rem + 2rem;
     margin-top: 14rem;
     margin-left: auto;
     margin-right: auto;
@@ -77,9 +84,12 @@
 
 .breadcrumb {
   padding-top: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
   color: $text-light;
 
-  max-width: 36rem;
+  max-width: 36rem + 2rem;
   margin: 0 auto;
 
   $opacity: 0.75;

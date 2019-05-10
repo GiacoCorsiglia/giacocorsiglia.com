@@ -1,5 +1,7 @@
 extends base.pug
 
+include images.pug
+
 block variables
   - var htmlId = "home"
   - var title = "Giaco Corsiglia"
@@ -8,6 +10,8 @@ block variables
 
 block body
   header
+    +image("me", "jpg", 200, 200, 200, "Photo of Giaco Corsiglia")(id="photo")
+
     h1 Giaco Corsiglia
 
   main
@@ -15,13 +19,14 @@ block body
       dl
         dt Currently
         dd.
-          A #[b graduate student] at #[b CU Boulder] studying #[b physics].
+          A #[b: a(href="https://www.colorado.edu/per/people/giaco-corsiglia") graduate student]
+          at #[b CU Boulder] studying&nbsp;#[b physics].
 
         dt Previously
         dd.
-          A #[b designer] and #[b programmer] at FareHarbor in #[b San Francisco].#[br]
-          A physics and mathematics major at #[b Amherst College],#[br]
-          where I played for the #[b: a(href="http://amherstultimate.weebly.com") Army of Darkness].
+          A #[b designer] and #[b programmer] at #[a(href="https://fareharbor.com") FareHarbor] in #[b San Francisco].#[br]
+          A physics and mathematics major at #[b Amherst College],#[br.large-only]
+          where I played for the #[b: a(href="http://amherstultimate.weebly.com") Army&nbsp;of&nbsp;Darkness].
 
         dt Once upon a time
         dd.

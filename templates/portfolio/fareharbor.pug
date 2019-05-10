@@ -12,33 +12,37 @@ block variables
 
 
 mixin gallery(slides)
-  figure(class={ 'gallery': true, 'multiple-slides': slides.length > 1 })
-    if slides.length > 1
-      figcaption.gallery__controls
-        each _, index in slides
-          button(
-            class={
-              'gallery__controls__slide': true,
-              'gallery__controls__slide-first': index === 0,
-              'gallery__controls__slide-last': index === slides.length -1,
-              'gallery__controls__slide-active': index === 0
-            },
-            title=`Go to slide ${index}`
-            data-index=index,
-            tabindex=tabindex++,
-          )
-            span Slide #{index}
+  div.column
+      //- div.fullscreen-wrapper
+      figure(class={ "gallery": true, "multiple-slides": slides.length > 1 })
+        if slides.length > 1
+          figcaption.gallery__controls
+            each _, index in slides
+              button(
+                class={
+                  "gallery__controls__slide": true,
+                  "gallery__controls__slide-first": index === 0,
+                  "gallery__controls__slide-last": index === slides.length -1,
+                  "gallery__controls__slide-active": index === 0
+                },
+                title=`Go to slide ${index}`
+                data-index=index,
+                tabindex=tabindex++,
+              )
+                span Slide #{index}
 
-        button.gallery__controls__play(title='Play slideshow', tabindex=tabindex++) Play
+            button.gallery__controls__play(title="Play slideshow", tabindex=tabindex++) Play
 
-        button.gallery__controls__pause(title='Pause slideshow', disabled=true, tabindex=tabindex++) Pause
+            button.gallery__controls__pause(title="Pause slideshow", disabled=true, tabindex=tabindex++) Pause
 
-        button.gallery__controls__fullscreen(title='Fullscreen', tabindex=tabindex++,) Fullscreen
+            button.gallery__controls__fullscreen(title="Fullscreen", tabindex=tabindex++,) Fullscreen
 
-    .image-container
-      each slide in slides
-        - const [name, ext, alt] = slide
-        +image(`fareharbor/${name}`, ext, 1040, 538, 1042, alt).gallery__slide
+            button.gallery__controls__exit-fullscreen(title="Exit Fullscreen", disabled=true, tabindex=tabindex++,) Exit Fullscreen
+
+        .image-container
+          each slide in slides
+            - const [name, ext, alt] = slide
+            +image(`fareharbor/${name}`, ext, 1040, 538, 1042, alt).gallery__slide
 
 
 block body
@@ -49,7 +53,8 @@ block body
       ol.breadcrumb
         li: a(href="/") Giaco Corsiglia
         li: a(href="/portfolio") Portfolio
-        li: span FareHarbor
+        //- Need this space here otherwise the list wraps after "Giaco".
+        li: span #{" "} FareHarbor
 
       h1 Giaco @ FareHarbor
 
@@ -71,7 +76,7 @@ block body
             FareHarbor offers reservation and accounting software alongside a
             suite of services designed to help tour and activity companies grow.
             I worked in close collaboration with the rest of the product
-            team—especially it leaders,
+            team—especially its leaders,
             #[a(href='https://bryanknauber.com'): b Bryan],
             #[a(href='http://mattbroten.com'): b Matt],
             and&nbsp;#[a(href='http://zachsnow.com'): b Zach].
@@ -220,7 +225,7 @@ block body
               the ability to maintain a consistent shopping cart state across multiple
               third-party iframes and page&nbsp;refreshes.
 
-          figure
+          figure#other-figure
             .image-container
               +image('fareharbor/other', 'png', 406, 346, 408, 'Screenshot of an interface for calculating a percentage-based refund.')
 
@@ -228,10 +233,11 @@ block body
               I contributed many small details to the application over my time at
               FareHarbor, like this refund&nbsp;calculator.
 
-      aside
+      aside#note
         p.
           #[b NB]:  all screenshots on this page are of software owned by
-          FareHarbor Holdings, LLC.  Furthermore, they were taken in July of 2018
+          FareHarbor Holdings, LLC.  They are included here with permission.
+          Furthermore, they were taken in July of 2018
           and thus may be out of date.  In fact, FareHarbor is
           #[a(href='https://fareharbor.com/jobs/product/'): b always&nbsp;improving].#[br]
           The lighthouse logo is also property of&nbsp;FareHarbor.
