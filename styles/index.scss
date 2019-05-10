@@ -1,5 +1,3 @@
-@import "baseline-overlay";
-
 // RESET
 
 * {
@@ -71,6 +69,32 @@ body {
   line-height: 2rem;
   font-family: "Lato", "Trebuchet MS", sans-serif;
   font-weight: $regular;
+
+  // Baseline grid feature
+  position: relative;
+
+  &.baseline-grid::after {
+    content: "";
+    position: absolute;
+    z-index: 9999;
+    display: block;
+    pointer-events: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /** Thanks to https://basehold.it */
+    background: url(https://basehold.it/i/12);
+    background-size: 4px 12px;
+  }
+}
+
+#toggle-grid {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 a {
@@ -102,6 +126,8 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
+
+// GLOBAL FOOTER
 
 #footer {
   padding-bottom: 2rem;
