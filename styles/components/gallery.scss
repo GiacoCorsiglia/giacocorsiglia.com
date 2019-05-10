@@ -1,0 +1,221 @@
+.gallery {
+  $controls-height: 2rem;
+  $transition-duration: 450ms;
+  $transition-easing: ease-in-out;
+
+  position: relative;
+
+  .image-container {
+    position: relative;
+    border: 1px solid #dde1e4;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  &.multiple-slides {
+    padding-top: $controls-height;
+
+    .image-container {
+      border-top-left-radius: 0;
+    }
+  }
+
+  &:not(.ready) {
+    .gallery__slide:not(:first-child) {
+      display: none;
+    }
+  }
+
+  &.ready {
+    .gallery__slide {
+      &.gallery__slide--spacer {
+        // This will have been created by the JS.
+        visibility: hidden;
+      }
+
+      &:not(.gallery__slide--spacer) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        z-index: 1;
+        opacity: 0;
+
+        transition: opacity $transition-duration $transition-easing;
+      }
+
+      &.transitioning-out {
+        z-index: 2;
+        opacity: 1;
+      }
+
+      &.active {
+        z-index: 3;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__controls {
+    position: absolute; // So it's only as wide as its contents
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    height: 2rem;
+    display: flex;
+    align-content: stretch;
+
+    background: #fff;
+    border-style: solid;
+    border-color: #dde1e4;
+    border-width: 1px 1px 0 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: 0 1px 15px 0 rgba(#000, 0.07);
+
+    button {
+      border: none; // This is overridden below but more specific here.
+      background-color: transparent;
+      font-size: 1px;
+      color: transparent;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__slide {
+      width: 1.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &-first {
+        width: 0.5rem + 1.5rem;
+        padding-left: 0.5rem;
+      }
+
+      &-last {
+        width: 1.5rem + 0.5rem;
+        padding-right: 0.5rem;
+      }
+
+      span {
+        display: block;
+        height: 0.5rem;
+        width: 0.5rem;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 50%;
+
+        transition-property: background-color, border-color;
+        transition-duration: $transition-duration;
+        transition-timing-function: $transition-easing;
+      }
+
+      &:hover {
+        span {
+          transition-duration: 0;
+        }
+      }
+
+      &-active {
+        span {
+          border-color: #fff;
+          background: $fareharbor-blue;
+        }
+
+        &:focus {
+          span {
+            border-color: $fareharbor-blue;
+          }
+        }
+      }
+
+      &:not(&-active) {
+        span {
+          border-color: #979797;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+          span {
+            background: $fareharbor-blue;
+            border-color: $fareharbor-blue;
+          }
+        }
+      }
+    }
+
+    &__play,
+    &__pause,
+    &__fullscreen,
+    &__exit-fullscreen {
+      width: 1rem + 0.66666666rem + 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      // `!important` specificity hack due to too-clever SCSS nesting.
+      border-left: 1px solid #dde1e4 !important;
+      background-repeat: no-repeat;
+      background-position: center center;
+      cursor: pointer;
+
+      &:disabled {
+        display: none;
+      }
+    }
+
+    &__play {
+      background-image: url("data:image/svg+xml,%3csvg width='8' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 5L.5 9.33V.67z' fill='%23979797' fill-rule='evenodd'/%3e%3c/svg%3e");
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-image: url("data:image/svg+xml,%3csvg width='8' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 5L.5 9.33V.67z' fill='%230A6ECE' fill-rule='evenodd'/%3e%3c/svg%3e");
+      }
+    }
+
+    &__pause {
+      background-image: url("data:image/svg+xml,%3csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23979797' fill-rule='evenodd'%3e%3cpath stroke='%23979797' d='M.5.5h2v7h-2z'/%3e%3cpath d='M5 0h3v8H5z'/%3e%3c/g%3e%3c/svg%3e");
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-image: url("data:image/svg+xml,%3csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%230A6ECE' fill-rule='evenodd'%3e%3cpath stroke='%230A6ECE' d='M.5.5h2v7h-2z'/%3e%3cpath d='M5 0h3v8H5z'/%3e%3c/g%3e%3c/svg%3e");
+      }
+    }
+
+    &__fullscreen {
+      background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M8.121 3.172l.707.707-.707.707-.707-.707z'/%3e%3cpath fill='%23979797' d='M11.657.343l-.707 4.95L6.707 1.05z'/%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M3.879 8.828l-.707-.707.707-.707.707.707z'/%3e%3cpath fill='%23979797' d='M.343 11.657l.707-4.95 4.243 4.243z'/%3e%3cg%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M8.828 8.121l-.707.707-.707-.707.707-.707z'/%3e%3cpath fill='%23979797' d='M11.657 11.657l-4.95-.707 4.243-4.243z'/%3e%3c/g%3e%3cg%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M3.172 3.879l.707-.707.707.707-.707.707z'/%3e%3cpath fill='%23979797' d='M.343.343l4.95.707L1.05 5.293z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M8.121 3.172l.707.707-.707.707-.707-.707z'/%3e%3cpath fill='%230A6ECE' d='M11.657.343l-.707 4.95L6.707 1.05z'/%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M3.879 8.828l-.707-.707.707-.707.707.707z'/%3e%3cpath fill='%230A6ECE' d='M.343 11.657l.707-4.95 4.243 4.243z'/%3e%3cg%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M8.828 8.121l-.707.707-.707-.707.707-.707z'/%3e%3cpath fill='%230A6ECE' d='M11.657 11.657l-4.95-.707 4.243-4.243z'/%3e%3c/g%3e%3cg%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M3.172 3.879l.707-.707.707.707-.707.707z'/%3e%3cpath fill='%230A6ECE' d='M.343.343l4.95.707L1.05 5.293z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+      }
+    }
+
+    &__exit-fullscreen {
+      background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2.11 10.596L6 6.707l3.89 3.89a.5.5 0 0 0 .706-.708L6.707 6l3.89-3.89a.5.5 0 0 0-.708-.706L6 5.293l-3.89-3.89a.5.5 0 1 0-.706.708L5.293 6l-3.89 3.89a.5.5 0 1 0 .708.706z' fill='%23979797' stroke='%23979797' fill-rule='evenodd'/%3e%3c/svg%3e");
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2.11 10.596L6 6.707l3.89 3.89a.5.5 0 0 0 .706-.708L6.707 6l3.89-3.89a.5.5 0 0 0-.708-.706L6 5.293l-3.89-3.89a.5.5 0 1 0-.706.708L5.293 6l-3.89 3.89a.5.5 0 1 0 .708.706z' fill='%230A6ECE' stroke='%230A6ECE' fill-rule='evenodd'/%3e%3c/svg%3e");
+      }
+    }
+  }
+}

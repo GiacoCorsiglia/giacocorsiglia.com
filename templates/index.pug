@@ -9,13 +9,13 @@ block variables
   - var url = "https://giacocorsiglia.com"
 
 block body
-  header
-    +image("me", "jpg", 200, 200, 200, "Photo of Giaco Corsiglia")(id="photo")
+  header#header
+    +image("me", "jpg", 200, 200, 200, "Photo of Giaco Corsiglia")#photo
 
-    h1 Giaco Corsiglia
+    h1#name Giaco Corsiglia
 
   main
-    section#center-section
+    section#info-section
       dl
         dt Currently
         dd.
@@ -33,17 +33,17 @@ block body
           Born and raised in #[b New York City]#[br]
           (meaning I’ve #[b always] loathed #45).
 
-    nav#bottom-section
+    nav#links-section
       dl
         dt Portfolio
         dd
-          ul
+          ul.links-list
             li: a(href="/portfolio/fareharbor") My work at FareHarbor
             li: a(href="/portfolio/earlier") Earlier web work
 
         dt Links
         dd
-          ul
+          ul.links-list
             li: a(href="/resume.pdf") Résumé
             li: a(href="https://github.com/GiacoCorsiglia") github.com/GiacoCorsiglia
             li: a(href="https://www.linkedin.com/in/giacocorsiglia/") /in/GiacoCorsiglia/

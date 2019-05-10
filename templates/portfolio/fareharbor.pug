@@ -48,8 +48,8 @@ mixin gallery(slides)
 block body
   //- This wrapper has to clip an area above <main> since that has things
   //- protruding vertically (in particular the angled backgrounds).
-  .overflow-x
-    header
+  #overflow-x
+    header#header
       ol.breadcrumb
         li: a(href="/") Giaco Corsiglia
         li: a(href="/portfolio") Portfolio
@@ -71,7 +71,7 @@ block body
             (Angular 1) and #[b Python] (Django).  I also wrote a significant
             amount of #[b PHP], and dabbled with&nbsp;TypeScript.
 
-        div.column#lighthouse-column
+        div.column
           p.
             FareHarbor offers reservation and accounting software alongside a
             suite of services designed to help tour and activity companies grow.
@@ -233,7 +233,7 @@ block body
               I contributed many small details to the application over my time at
               FareHarbor, like this refund&nbsp;calculator.
 
-      aside#note
+      aside#nota-bene
         p.
           #[b NB]:  all screenshots on this page are of software owned by
           FareHarbor Holdings, LLC.  They are included here with permission.

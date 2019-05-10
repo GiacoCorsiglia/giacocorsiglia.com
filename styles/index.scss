@@ -8,6 +8,7 @@
   padding: 0;
 }
 
+ol,
 ul {
   list-style: none;
 }
@@ -33,6 +34,26 @@ $fareharbor-blue: #0a6ece;
 $text-dark: #333;
 $text-light: #fff;
 
+// SKEW
+
+$global-skew: 3deg;
+
+@mixin background-stripe($color: #fff) {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: skewY($global-skew);
+    background: $color;
+  }
+}
+
 // TYPOGRAPHY
 
 $regular: 400;
@@ -50,7 +71,6 @@ body {
   line-height: 2rem;
   font-family: "Lato", "Trebuchet MS", sans-serif;
   font-weight: $regular;
-  color: $text-dark;
 }
 
 a {
@@ -64,11 +84,35 @@ a {
 
 // LAYOUT
 
-footer {
+@mixin edge-spacing {
+  // Offset from the edges of narrow screens.
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@mixin image-edge-spacing {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@mixin default-width {
+  @include edge-spacing;
+  max-width: 36rem + 2rem; // Actual text width plus edge-space padding
+  // Horizontal center.
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer {
   padding-bottom: 2rem;
   font-size: $text-small;
   opacity: 0.75;
 }
+
+// COMPONENTS
+
+@import "components/breadcrumb";
+@import "components/gallery";
 
 // SECTIONS
 

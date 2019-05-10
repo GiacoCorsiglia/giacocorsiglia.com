@@ -11,100 +11,97 @@
 }
 
 #fareharbor {
+  $paragraph-spacing: 2rem;
+
+  h1,
+  h2 {
+    font-size: 4rem;
+    line-height: 4rem;
+    margin-bottom: $paragraph-spacing;
+  }
+
   body {
     background: $fareharbor-blue;
-  }
-
-  .overflow-x {
-    // This has to go here, since setting `overflow-x: hidden` automatically
-    // sets overflow-y: auto, and we don't want individual sections scrolling,
-    // which they will do due to (a) the skewed ::before elements creating the
-    // angled backgrounds (these are als why we can't set `overflow-x: hidden`
-    // on <main>); and (b) galleries which are meant to overflow vertically.
-    // Very frustrating.
-    width: 100vw;
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-
-  header {
     color: $text-light;
+  }
+
+  #overflow-x {
+    @include fh-large {
+      // This has to go here, since setting `overflow-x: hidden` automatically
+      // sets overflow-y: auto, and we don't want individual sections scrolling,
+      // which they will do due to (a) the skewed ::before elements creating the
+      // angled backgrounds (these are also why we can't set `overflow-x: hidden`
+      // on <main>); and (b) galleries which are meant to overflow vertically.
+      // Very frustrating.
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+  }
+
+  // HEADER/INTRO SECTION
+
+  #header {
     max-width: 12 * 6rem;
     margin: 0 auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
 
     @include fh-large {
       padding-bottom: 6rem;
       position: relative;
-    }
 
-    .columns {
-      @include fh-large {
+      h1 {
+        @include edge-spacing;
+        margin-top: 5rem;
+      }
+
+      .columns {
+        @include edge-spacing;
         display: grid; // Because who wants to deal with gutters any other way?
         grid-template-columns: 1fr 1fr;
         grid-column-gap: 4rem;
       }
+
+      p:not(:last-of-type) {
+        margin-bottom: $paragraph-spacing;
+      }
+
+      #lighthouse {
+        position: absolute; // Relative to #header
+        left: 64%;
+      }
     }
 
     @include fh-small {
+      .breadcrumb {
+        @include default-width;
+      }
+
+      h1 {
+        @include default-width;
+        margin-top: 3rem;
+      }
+
       p {
-        margin-bottom: 2rem; // TODO: mostly redundant.
+        @include default-width;
+        margin-bottom: $paragraph-spacing;
+      }
+
+      #lighthouse {
+        position: relative;
+        margin: 3rem auto 0;
       }
     }
 
     #lighthouse {
       display: block;
-
-      @include fh-large {
-        position: absolute;
-        left: 64%;
-      }
-
-      @include fh-small {
-        position: relative;
-        margin: 3rem auto 0;
-      }
-
-      bottom: -14px;
+      bottom: -14px; // For both relative and absolute positioning.
     }
   }
 
-  .breadcrumb {
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  h1 {
-    @include fh-large {
-      margin-top: 5rem;
-    }
-    @include fh-small {
-      margin-top: 3rem;
-    }
-  }
-
-  header,
-  main {
-    p {
-      @include fh-small {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 36rem;
-      }
-    }
-
-    p:not(:last-of-type) {
-      margin-bottom: 2rem;
-    }
-  }
+  // CONTENT
 
   main {
     section {
-      padding-left: 1rem;
-      padding-right: 1rem;
-
       &:nth-child(2n) {
         color: $text-light;
       }
@@ -113,391 +110,178 @@
         position: relative;
         color: $text-dark;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: -1;
-          background: #fff;
-          transform: skewY(3deg);
-        }
+        @include background-stripe;
       }
     }
 
-    .section-content {
-      max-width: 16 * 6rem;
-      margin: 0 auto;
+    p:not(:last-child) {
+      margin-bottom: 2rem;
     }
-  }
 
-  h1,
-  h2 {
+    @include fh-large {
+      section {
+        @include edge-spacing;
+      }
+
+      .section-content {
+        max-width: 16 * 6rem;
+        margin: 0 auto;
+      }
+    }
+
     @include fh-small {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 36rem;
+      h2,
+      p {
+        @include default-width;
+      }
     }
-
-    font-size: 4rem;
-    line-height: 4rem;
-    margin-bottom: 2rem;
   }
 
-  aside {
-    color: $text-light;
-  }
-
-  footer {
-    color: $text-light;
-    text-align: center;
-  }
-
-  #note {
-    margin: 4rem auto 6rem;
-    max-width: 36rem + 2rem;
-    padding: 1rem;
-    font-size: $text-small;
-  }
-
-  figure {
+  #other-figure {
     img {
       display: block;
       max-width: 100%;
       height: auto;
     }
   }
-}
 
-@include fh-large {
-  #timeline,
-  #grid,
-  #embed-generator,
-  #content {
-    .section-content {
-      @include fh-large {
+  // Custom  layout for each section.
+
+  @include fh-large {
+    #timeline,
+    #grid,
+    #embed-generator,
+    #content {
+      .section-content {
+        @include fh-large {
+          display: grid;
+          // Text column, figure column
+          grid-template-columns: 34rem 1040px + 2px;
+          grid-column-gap: 4rem;
+        }
+      }
+    }
+
+    #timeline {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+
+    #grid {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+
+      .gallery {
+        margin-bottom: -12rem;
+      }
+    }
+
+    #sites {
+      padding-top: 12rem;
+      padding-bottom: 12rem;
+
+      h2,
+      .columns {
+        max-width: 14 * 6rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .columns {
         display: grid;
-        // Text column, figure column
-        grid-template-columns: 34rem 1040px + 2px;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-column-gap: 4rem;
       }
     }
+
+    #embed-generator {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+
+      .gallery {
+        margin-top: -12rem;
+        margin-bottom: -12rem;
+      }
+    }
+
+    #content {
+      padding-top: 12rem;
+      padding-bottom: 6rem;
+
+      .gallery {
+        margin-top: -2rem;
+        margin-bottom: -14rem;
+      }
+    }
+
+    #other {
+      padding-top: 12rem;
+      padding-bottom: 6rem;
+
+      .section-content {
+        display: grid;
+        // Text column, figure column
+        grid-template-columns: minmax(auto, 34rem) minmax(auto, 406px + 2px);
+        grid-column-gap: 4rem;
+      }
+
+      .image-container {
+        margin: 1rem 0 2rem;
+      }
+    }
   }
 
-  #timeline {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-
-  #grid {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+  @include fh-small {
+    #timeline,
+    #grid,
+    #embed-generator,
+    #sites,
+    #content,
+    #other {
+      padding-top: 4rem;
+      padding-bottom: 6rem;
+    }
 
     .gallery {
-      margin-bottom: -12rem;
-    }
-  }
-
-  #sites {
-    padding-top: 12rem;
-    padding-bottom: 12rem;
-
-    h2,
-    .columns {
-      max-width: 14 * 6rem;
-      margin-left: auto;
-      margin-right: auto;
+      margin-top: 3rem;
+      // Have to use margins not padding here so absolute positioning inside the
+      // .gallery isn't disturbed.
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
     }
 
-    .columns {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-column-gap: 4rem;
-    }
-  }
+    #other-figure {
+      margin-top: 3rem;
 
-  #embed-generator {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-
-    .gallery {
-      margin-top: -12rem;
-      margin-bottom: -12rem;
-    }
-  }
-
-  #content {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
-
-    .gallery {
-      margin-top: -2rem;
-      margin-bottom: -14rem;
-    }
-  }
-
-  #other {
-    padding-top: 12rem;
-    padding-bottom: 6rem;
-
-    .section-content {
-      display: grid;
-      // Text column, figure column
-      grid-template-columns: minmax(auto, 34rem) minmax(auto, 406px + 2px);
-      grid-column-gap: 4rem;
-    }
-
-    .image-container {
-      margin: 1rem 0 2rem;
-    }
-  }
-}
-
-@include fh-small {
-  #timeline,
-  #grid,
-  #embed-generator,
-  #sites,
-  #content,
-  #other {
-    padding-top: 4rem;
-    padding-bottom: 6rem;
-  }
-
-  .gallery {
-    margin: 3rem -0.5rem 0;
-  }
-
-  #other-figure {
-    margin-top: 3rem;
-
-    img {
-      margin: auto;
-    }
-
-    figcaption {
-      margin: 2rem auto 0;
-      max-width: 36rem;
-    }
-  }
-}
-
-.gallery {
-  $controls-height: 2rem;
-  $transition-duration: 450ms;
-  $transition-easing: ease-in-out;
-
-  position: relative;
-
-  .image-container {
-    border: 1px solid #dde1e4;
-    border-radius: 3px;
-    overflow: hidden;
-    background: #fff;
-  }
-
-  &.multiple-slides {
-    padding-top: $controls-height;
-
-    .image-container {
-      border-top-left-radius: 0;
-    }
-  }
-
-  &:not(.ready) {
-    .gallery__slide:not(:first-child) {
-      display: none;
-    }
-  }
-
-  &.ready {
-    .image-container {
-      position: relative;
-    }
-
-    .gallery__slide {
-      &.gallery__slide--spacer {
-        visibility: hidden;
+      img {
+        margin: auto;
       }
 
-      &:not(.gallery__slide--spacer) {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-
-        z-index: 1;
-        opacity: 0;
-
-        transition: opacity $transition-duration $transition-easing;
-      }
-
-      &.transitioning-out {
-        z-index: 2;
-        opacity: 1;
-      }
-
-      &.active {
-        z-index: 3;
-        opacity: 1;
+      figcaption {
+        margin-top: 2rem;
+        @include default-width;
       }
     }
   }
 
-  &__controls {
-    position: absolute; // So it's only as wide as its contents
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    height: 2rem;
-    display: flex;
-    align-content: stretch;
+  // FOOTER
 
-    background: #ffffff;
-    border-style: solid;
-    border-color: #dde1e4;
-    border-width: 1px 1px 0 1px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    box-shadow: 0 1px 15px 0 rgba(#000, 0.07);
+  #nota-bene {
+    margin-top: 4rem;
+    margin-bottom: 6rem;
+    font-size: $text-small;
 
-    button {
-      border: none; // This is overridden below but more specific here.
-      background-color: transparent;
-      font-size: 1px;
-      color: transparent;
-
-      &:focus {
-        outline: none;
-      }
+    p {
+      @include default-width;
     }
+  }
 
-    &__slide {
-      width: 1.5rem;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-
-      &-first {
-        width: 0.5rem + 1.5rem;
-        padding-left: 0.5rem;
-      }
-
-      &-last {
-        width: 1.5rem + 0.5rem;
-        padding-right: 0.5rem;
-      }
-
-      span {
-        display: block;
-        height: 0.5rem;
-        width: 0.5rem;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 50%;
-
-        transition-property: background-color, border-color;
-        transition-duration: $transition-duration;
-        transition-timing-function: $transition-easing;
-      }
-
-      &:hover {
-        span {
-          transition-duration: 0;
-        }
-      }
-
-      &-active {
-        span {
-          border-color: #fff;
-          background: $fareharbor-blue;
-        }
-
-        &:focus {
-          span {
-            border-color: $fareharbor-blue;
-          }
-        }
-      }
-
-      &:not(&-active) {
-        span {
-          border-color: #979797;
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-          span {
-            background: $fareharbor-blue;
-            border-color: $fareharbor-blue;
-          }
-        }
-      }
+  #footer {
+    @include fh-large {
+      text-align: center;
     }
-
-    &__play,
-    &__pause,
-    &__fullscreen,
-    &__exit-fullscreen {
-      width: 1rem + 0.66666666rem + 1rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      // `!important` specificity hack due to too-clever SCSS nesting.
-      border-left: 1px solid #dde1e4 !important;
-      background-repeat: no-repeat;
-      background-position: center center;
-      cursor: pointer;
-
-      &:disabled {
-        display: none;
-      }
-    }
-
-    &__play {
-      background-image: url("data:image/svg+xml,%3csvg width='8' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 5L.5 9.33V.67z' fill='%23979797' fill-rule='evenodd'/%3e%3c/svg%3e");
-
-      &:hover,
-      &:focus,
-      &:active {
-        background-image: url("data:image/svg+xml,%3csvg width='8' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 5L.5 9.33V.67z' fill='%230A6ECE' fill-rule='evenodd'/%3e%3c/svg%3e");
-      }
-    }
-
-    &__pause {
-      background-image: url("data:image/svg+xml,%3csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%23979797' fill-rule='evenodd'%3e%3cpath stroke='%23979797' d='M.5.5h2v7h-2z'/%3e%3cpath d='M5 0h3v8H5z'/%3e%3c/g%3e%3c/svg%3e");
-
-      &:hover,
-      &:focus,
-      &:active {
-        background-image: url("data:image/svg+xml,%3csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='%230A6ECE' fill-rule='evenodd'%3e%3cpath stroke='%230A6ECE' d='M.5.5h2v7h-2z'/%3e%3cpath d='M5 0h3v8H5z'/%3e%3c/g%3e%3c/svg%3e");
-      }
-    }
-
-    &__fullscreen {
-      background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M8.121 3.172l.707.707-.707.707-.707-.707z'/%3e%3cpath fill='%23979797' d='M11.657.343l-.707 4.95L6.707 1.05z'/%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M3.879 8.828l-.707-.707.707-.707.707.707z'/%3e%3cpath fill='%23979797' d='M.343 11.657l.707-4.95 4.243 4.243z'/%3e%3cg%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M8.828 8.121l-.707.707-.707-.707.707-.707z'/%3e%3cpath fill='%23979797' d='M11.657 11.657l-4.95-.707 4.243-4.243z'/%3e%3c/g%3e%3cg%3e%3cpath stroke='%23979797' fill='%23D8D8D8' d='M3.172 3.879l.707-.707.707.707-.707.707z'/%3e%3cpath fill='%23979797' d='M.343.343l4.95.707L1.05 5.293z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
-
-      &:hover,
-      &:focus,
-      &:active {
-        background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M8.121 3.172l.707.707-.707.707-.707-.707z'/%3e%3cpath fill='%230A6ECE' d='M11.657.343l-.707 4.95L6.707 1.05z'/%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M3.879 8.828l-.707-.707.707-.707.707.707z'/%3e%3cpath fill='%230A6ECE' d='M.343 11.657l.707-4.95 4.243 4.243z'/%3e%3cg%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M8.828 8.121l-.707.707-.707-.707.707-.707z'/%3e%3cpath fill='%230A6ECE' d='M11.657 11.657l-4.95-.707 4.243-4.243z'/%3e%3c/g%3e%3cg%3e%3cpath stroke='%230A6ECE' fill='%230A6ECE' d='M3.172 3.879l.707-.707.707.707-.707.707z'/%3e%3cpath fill='%230A6ECE' d='M.343.343l4.95.707L1.05 5.293z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
-      }
-    }
-
-    &__exit-fullscreen {
-      background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2.11 10.596L6 6.707l3.89 3.89a.5.5 0 0 0 .706-.708L6.707 6l3.89-3.89a.5.5 0 0 0-.708-.706L6 5.293l-3.89-3.89a.5.5 0 1 0-.706.708L5.293 6l-3.89 3.89a.5.5 0 1 0 .708.706z' fill='%23979797' stroke='%23979797' fill-rule='evenodd'/%3e%3c/svg%3e");
-
-      &:hover,
-      &:focus,
-      &:active {
-        background-image: url("data:image/svg+xml,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2.11 10.596L6 6.707l3.89 3.89a.5.5 0 0 0 .706-.708L6.707 6l3.89-3.89a.5.5 0 0 0-.708-.706L6 5.293l-3.89-3.89a.5.5 0 1 0-.706.708L5.293 6l-3.89 3.89a.5.5 0 1 0 .708.706z' fill='%230A6ECE' stroke='%230A6ECE' fill-rule='evenodd'/%3e%3c/svg%3e");
-      }
+    @include fh-small {
+      @include default-width;
     }
   }
 }

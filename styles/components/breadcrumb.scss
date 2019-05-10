@@ -1,0 +1,40 @@
+.breadcrumb {
+  @include edge-spacing;
+  padding-top: 4rem;
+
+  $opacity: 0.75;
+
+  li {
+    display: inline;
+
+    &:not(:last-child)::after {
+      content: "/";
+      margin-left: 1rem;
+      margin-right: 1rem;
+      opacity: $opacity;
+    }
+  }
+
+  // Items will either be an <a>, <h1>, or <span>.
+
+  a {
+    opacity: $opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  h1,
+  span {
+    opacity: $opacity;
+  }
+
+  // Sometimes includes an <h1> just to get it on the page, but it shouldn't
+  // look different from other breadcrumb elements.
+  h1 {
+    display: inline;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+}
