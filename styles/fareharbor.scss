@@ -15,9 +15,16 @@
 
   h1,
   h2 {
-    font-size: 4rem;
-    line-height: 4rem;
     margin-bottom: $paragraph-spacing;
+    // These are deliberately not the `fh-*` breakpoints.
+    @include large {
+      font-size: 4rem;
+      line-height: 4rem;
+    }
+    @include small {
+      font-size: 3rem;
+      line-height: 3rem;
+    }
   }
 
   body {
@@ -137,6 +144,14 @@
     }
   }
 
+  .image-container {
+    border: 1px solid $image-border-color;
+    border-radius: $image-border-radius;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: $image-shadow;
+  }
+
   #other-figure {
     img {
       display: block;
@@ -253,8 +268,10 @@
     #other-figure {
       margin-top: 3rem;
 
-      img {
-        margin: auto;
+      .image-wrap {
+        @include image-edge-spacing;
+        display: flex;
+        justify-content: center;
       }
 
       figcaption {

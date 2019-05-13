@@ -7,10 +7,6 @@
 
   .image-container {
     position: relative;
-    border: 1px solid #dde1e4;
-    border-radius: 3px;
-    overflow: hidden;
-    background: #fff;
   }
 
   img {
@@ -76,11 +72,11 @@
 
     background: #fff;
     border-style: solid;
-    border-color: #dde1e4;
+    border-color: $image-border-color;
     border-width: 1px 1px 0 1px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    box-shadow: 0 1px 15px 0 rgba(#000, 0.07);
+    border-top-left-radius: $image-border-radius;
+    border-top-right-radius: $image-border-radius;
+    box-shadow: $image-shadow;
 
     button {
       border: none; // This is overridden below but more specific here.

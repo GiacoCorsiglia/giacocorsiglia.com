@@ -15,9 +15,9 @@
     width: 14rem;
     height: 14rem;
     margin: 0 auto 2rem;
-    border: 1px solid #dde1e4;
+    border: 1px solid $image-border-color;
     border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(#000, 0.07);
+    box-shadow: $image-shadow;
   }
 
   #name {
