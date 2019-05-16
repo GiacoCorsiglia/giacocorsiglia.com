@@ -145,6 +145,7 @@ a {
 
 @import "components/breadcrumb";
 @import "components/gallery";
+@import "components/photoswipe";
 
 // SECTIONS
 
@@ -152,3 +153,5 @@ a {
 @import "portfolio";
 @import "earlier";
 @import "fareharbor";
+
+@import "../node_modules/photoswipe/src/css/main.scss";

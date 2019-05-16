@@ -20,17 +20,18 @@ html(lang="en", id=htmlId)
     meta(name="twitter:description" content=description)
     //- meta(name="twitter:image" content=image)
 
+    //- Stylesheet.
     link(rel="stylesheet" href="/index.css")
-    //- link(rel="stylesheet" href="//basehold.it/12")
+    //- Favicon.
     link(rel="icon" type="image/x-icon" href="/favicon.ico")
   body
-    //- Stylesheet.
+    //- Font stylesheet.
     //- var fontWeights = '100,100i,300,300i,400,400i,700,700i,900,900i'
     - var fontWeights = '400,900'
     link(
       href="https://fonts.googleapis.com/css?family=Lato:" + fontWeights,
       rel="stylesheet",
-      onload="document.body.className += ' js-fonts-loaded';"
+      onload="document.body.classList.add('js-fonts-loaded');"
     )
 
     block body
@@ -41,8 +42,9 @@ html(lang="en", id=htmlId)
         a(href="https://github.com/GiacoCorsiglia/giacocorsiglia.com").
           Published on GitHub
       p
-        span(id="toggle-grid") Toggle baseline grid
+        span(
+          id="toggle-grid",
+          onclick="document.body.classList.toggle('baseline-grid');"
+        ) Toggle baseline grid
 
-
-    script(src="/index.js")
-    script window.require('index');
+    block javascript

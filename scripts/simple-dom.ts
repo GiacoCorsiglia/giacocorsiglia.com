@@ -4,7 +4,12 @@
 
 // In theory could remove readonly props: https://stackoverflow.com/questions/49579094/typescript-conditional-types-filter-out-readonly-properties-pick-only-requir
 type PropsType<K extends keyof HTMLElementTagNameMap> = {
-  [P in keyof HTMLElementTagNameMap[K]]?: HTMLElementTagNameMap[K][P] extends string | number | boolean ? HTMLElementTagNameMap[K][P] : never;
+  [P in keyof HTMLElementTagNameMap[K]]?: HTMLElementTagNameMap[K][P] extends
+    | string
+    | number
+    | boolean
+    ? HTMLElementTagNameMap[K][P]
+    : never
 };
 
 export function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -27,13 +32,11 @@ export function createElement<K extends keyof HTMLElementTagNameMap>(
 
   for (const child of children) {
     let childNode: Node;
-    if (typeof child === 'string') {
+    if (typeof child === "string") {
       childNode = document.createTextNode(child);
-    }
-    else if (child instanceof Node) {
+    } else if (child instanceof Node) {
       childNode = child;
-    }
-    else {
+    } else {
       childNode = document.createTextNode(child.toString());
     }
     element.appendChild(childNode);
@@ -47,7 +50,9 @@ declare global {
     interface Element extends Node {}
 
     type IntrinsicElements = {
-      [E in keyof HTMLElementTagNameMap]: PropsType<E>;
-    }
+      [E in keyof HTMLElementTagNameMap]: PropsType<E> & {
+        [key: string]: any;
+      }
+    };
   }
 }
