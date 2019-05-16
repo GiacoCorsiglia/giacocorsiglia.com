@@ -1,0 +1,22 @@
+{
+  "cSpell.words": [
+    "fareharbor",
+    "pswp"
+  ],
+  "[scss]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+  },
+}
