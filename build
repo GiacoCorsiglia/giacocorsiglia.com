@@ -1,32 +1,27 @@
 #!/usr/bin/env node
-const autoprefixer = require('autoprefixer');
-const childProcess = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const postcss = require('postcss');
-const pug = require('pug');
-const sass = require('node-sass');
-const util = require('util');
-
+const autoprefixer = require("autoprefixer");
+const childProcess = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const postcss = require("postcss");
+const pug = require("pug");
+const sass = require("node-sass");
+const util = require("util");
 
 const fsWriteFile = util.promisify(fs.writeFile);
-
-
 
 // SETTINGS
 
 const PAGES = [
-  'index',
-  'portfolio',
-  'portfolio/earlier',
-  'portfolio/fareharbor',
+  "index",
+  "portfolio",
+  "portfolio/earlier",
+  "portfolio/fareharbor"
 ];
 
-const OUTPUT_DIR = path.join(__dirname, 'public');
-const CSS_DIR = path.join(__dirname, 'styles');
-const HTML_DIR = path.join(__dirname, 'templates');
-
-
+const OUTPUT_DIR = path.join(__dirname, "public");
+const CSS_DIR = path.join(__dirname, "styles");
+const HTML_DIR = path.join(__dirname, "templates");
 
 // SCRIPT
 
@@ -34,12 +29,12 @@ const options = parseOptions();
 
 if (options.clean) {
   handleClean();
-  success('Removed build artifacts.');
+  success("Removed build artifacts.");
   process.exit();
 }
 
 if (options.watch) {
-  info('Watching for changes.\n');
+  info("Watching for changes.\n");
 }
 
 if (options.css) {
@@ -54,20 +49,19 @@ if (options.js) {
   handleJs();
 }
 
-
 // OPTIONS
 
 function parseOptions() {
   const args = process.argv.slice(2);
 
-  let watch = args.includes('--watch');
-  let dev = watch || !args.includes('--prod');
+  let watch = args.includes("--watch");
+  let dev = watch || !args.includes("--prod");
 
-  let css = args.includes('--css');
-  let html = args.includes('--html');
-  let js = args.includes('--js');
+  let css = args.includes("--css");
+  let html = args.includes("--html");
+  let js = args.includes("--js");
   if (js && watch) {
-    error('Cannot use --js and --watch at the same time; use ./serve');
+    error("Cannot use --js and --watch at the same time; use ./serve");
     process.exit(1);
   }
   if (!js && !css && !html) {
@@ -77,61 +71,63 @@ function parseOptions() {
     }
   }
 
-  const clean = args.includes('--clean');
+  const clean = args.includes("--clean");
   if (clean) {
     watch = css = html = js = false;
   }
 
-  return { clean, dev, watch, css, html, js, };
+  return { clean, dev, watch, css, html, js };
 }
-
-
 
 // CLEAN
 
 function handleClean() {
   const commands = [
     'find . \\( -name "*.css" -or -name "*.html" -or -name "*.js" -or -name "*.map" \\) -and -type f -delete',
-    'find . -type d -empty -delete',
+    "find . -type d -empty -delete"
   ];
-  childProcess.execSync(commands.join(';'), { cwd: OUTPUT_DIR });
+  childProcess.execSync(commands.join(";"), { cwd: OUTPUT_DIR });
 }
-
-
 
 // CSS
 
 function handleCss(watch, dev) {
-  const inFile = path.join(CSS_DIR, 'index.scss');
-  const outFile = path.join(OUTPUT_DIR, 'index.css');
+  const inFile = path.join(CSS_DIR, "index.scss");
+  const outFile = path.join(OUTPUT_DIR, "index.css");
 
   const sassRender = util.promisify(sass.render);
-  const postcssProcessor = postcss([ autoprefixer({ browsers: 'cover 99.5%' }) ]);
+  const postcssProcessor = postcss([autoprefixer({ browsers: "cover 99.5%" })]);
 
   function build() {
     return sassRender({
       file: inFile,
-      outputStyle: dev ? 'nested' : 'compressed',
+      outputStyle: dev ? "nested" : "compressed",
       outFile,
       sourceMap: dev ? `${outFile}.map` : false,
-      sourceMapRoot: 'http://localhost:8888/styles/'
+      sourceMapRoot: "http://localhost:8888/styles/"
     })
-      .then(result => postcssProcessor.process(result.css, {
-        from: inFile,
-        to: outFile,
-        map: !dev ? false : {
-          prev: JSON.parse(result.map),
-          inline: false,
-        }
-      }), errorHandler('SASS Compilation Error'))
+      .then(
+        result =>
+          postcssProcessor.process(result.css, {
+            from: inFile,
+            to: outFile,
+            map: !dev
+              ? false
+              : {
+                  prev: JSON.parse(result.map),
+                  inline: false
+                }
+          }),
+        errorHandler("SASS Compilation Error")
+      )
       .then(result => {
         const promises = [fsWriteFile(outFile, result.css)];
         if (dev) {
           promises.push(fsWriteFile(`${outFile}.map`, result.map));
         }
         return Promise.all(promises);
-      }, errorHandler('PostCSS Error'))
-      .then(() => success('Compiled CSS.\n'), errorHandler('CSS FS error.'))
+      }, errorHandler("PostCSS Error"))
+      .then(() => success("Compiled CSS.\n"), errorHandler("CSS FS error."))
       .catch(errorCatcher);
   }
 
@@ -142,12 +138,10 @@ function handleCss(watch, dev) {
   }
 
   fs.watch(CSS_DIR, { recursive: true }, (event, filename) => {
-    info(`Rebuilding CSS due to: (${event}, ${filename}).`)
+    info(`Rebuilding CSS due to: (${event}, ${filename}).`);
     build();
   });
 }
-
-
 
 // HTML
 
@@ -169,10 +163,10 @@ function handleHtml(watch, dev) {
     try {
       templateFn = pug.compileFile(templatePath, {
         filename: template,
-        basedir: HTML_DIR,
+        basedir: HTML_DIR
       });
     } catch (e) {
-      error(`HTML Compilation Error (${page}):`, '\n\n', e, '\n');
+      error(`HTML Compilation Error (${page}):`, "\n\n", e, "\n");
       return Promise.resolve(); // Just creates a new line after this.
     }
 
@@ -182,49 +176,47 @@ function handleHtml(watch, dev) {
     try {
       output = templateFn();
     } catch (e) {
-      error(`HTML Compilation Error (${page}):`, '\n\n', e, '\n');
+      error(`HTML Compilation Error (${page}):`, "\n\n", e, "\n");
       return Promise.resolve(); // Just creates a new line after this.
     }
 
-    return fsWriteFile(outFile, output).then(() => success(`Compiled HTML: ${page}.`), errorHandler('HTML FS Error'));
+    return fsWriteFile(outFile, output).then(
+      () => success(`Compiled HTML: ${page}.`),
+      errorHandler("HTML FS Error")
+    );
   }
 
-  Promise.all(PAGES.map(buildPage)).then(() => console.log())
+  Promise.all(PAGES.map(buildPage)).then(() => console.log());
 
   if (!watch) {
     return;
   }
 
   fs.watch(HTML_DIR, { recursive: true }, (event, filename) => {
-    info(`Rebuilding HTML due to: (${event}, ${filename}).`)
+    info(`Rebuilding HTML due to: (${event}, ${filename}).`);
 
     const filePath = path.join(HTML_DIR, filename);
 
     const promises = PAGES.filter(page => {
-      const is = `${page}.pug` === filename
+      const is = `${page}.pug` === filename;
       const depends = pageDependencies[page].includes(filePath);
       return is || depends;
     }).map(buildPage);
 
     if (promises.length) {
       Promise.all(promises).then(() => console.log());
-    }
-    else {
-      success('No HTML compilation required.\n');
+    } else {
+      success("No HTML compilation required.\n");
     }
   });
 }
 
-
-
 // JS
 
 function handleJs() {
-  childProcess.execSync('./node_modules/.bin/tsc');
-  success('Compiled JS.\n');
+  childProcess.execSync("./node_modules/.bin/tsc");
+  success("Compiled JS.\n");
 }
-
-
 
 // UTILITIES
 
@@ -240,11 +232,11 @@ function error(message, ...info) {
   console.error(`\x1b[31m✘ ${message}\x1b[0m`, ...info);
 }
 
-const shortCircuitPromise = new Error('Short-circuit promise chain');
+const shortCircuitPromise = new Error("Short-circuit promise chain");
 function errorHandler(label) {
   return e => {
     if (e !== shortCircuitPromise) {
-      error(label, '\n\n', e, '\n');
+      error(label, "\n\n", e, "\n");
     }
     throw shortCircuitPromise;
   };
