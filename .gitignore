@@ -4,6 +4,7 @@ node_modules
 # Build artifacts.
 public/**/*.css
 public/**/*.html
+public/**/*.xml
 public/**/*.js
 public/**/*.map
 
