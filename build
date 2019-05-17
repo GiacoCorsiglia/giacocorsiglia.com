@@ -214,7 +214,11 @@ function handleHtml(watch, dev) {
 // JS
 
 function handleJs() {
+  const jsFile = `${OUTPUT_DIR}/index.js`; // Set in tsconfig
   childProcess.execSync("./node_modules/.bin/tsc");
+  childProcess.execSync(
+    `./node_modules/.bin/uglifyjs "${jsFile}" --compress --mangle --output "${jsFile}"`
+  );
   success("Compiled JS.\n");
 }
 
