@@ -1,9 +1,8 @@
-import {
-  CustomPhotoSwipeUI,
-  getCustomPhotoSwipeUIElements
-} from "./custom-photoswipe-ui";
 import * as scroll from "./scroll";
 import * as SimpleDOM from "./simple-dom";
+
+// This is a UMD global not included in the PhotoSwipe type decalarations.
+declare const PhotoSwipeUI_Default: any;
 
 // Helpers.
 
@@ -24,8 +23,55 @@ const pswpElement = (
         <div className="pswp__item" />
       </div>
 
-      {/* These elements are for my custom UI: */}
-      {getCustomPhotoSwipeUIElements()}
+      {/* These elements are for the Default PhotoSwipe UI: */}
+      <div className="pswp__ui pswp__ui--hidden">
+        <div className="pswp__top-bar">
+          <div className="pswp__counter" />
+
+          <button
+            className="pswp__button pswp__button--close"
+            title="Close (Esc)"
+          />
+
+          <button className="pswp__button pswp__button--share" title="Share" />
+
+          <button
+            className="pswp__button pswp__button--fs"
+            title="Toggle fullscreen"
+          />
+
+          <button
+            className="pswp__button pswp__button--zoom"
+            title="Zoom in/out"
+          />
+
+          <div className="pswp__preloader">
+            <div className="pswp__preloader__icn">
+              <div className="pswp__preloader__cut">
+                <div className="pswp__preloader__donut" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+          <div className="pswp__share-tooltip" />
+        </div>
+
+        <button
+          className="pswp__button pswp__button--arrow--left"
+          title="Previous (arrow left)"
+        />
+
+        <button
+          className="pswp__button pswp__button--arrow--right"
+          title="Next (arrow right)"
+        />
+
+        <div className="pswp__caption">
+          <div className="pswp__caption__center" />
+        </div>
+      </div>
     </div>
   </div>
 );
@@ -160,7 +206,8 @@ galleries.forEach((gallery, index) => {
 
     const pswp = new PhotoSwipe(
       pswpElement as HTMLElement,
-      CustomPhotoSwipeUI,
+      // CustomPhotoSwipeUI,
+      PhotoSwipeUI_Default,
       slides.map(slideEl => ({
         // The `currentSrc` property returns the browser's choice from the `srcset`.
         src: slideEl.currentSrc || slideEl.src,
