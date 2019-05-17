@@ -33,8 +33,6 @@ const pswpElement = (
             title="Close (Esc)"
           />
 
-          <button className="pswp__button pswp__button--share" title="Share" />
-
           <button
             className="pswp__button pswp__button--fs"
             title="Toggle fullscreen"
@@ -52,10 +50,6 @@ const pswpElement = (
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-          <div className="pswp__share-tooltip" />
         </div>
 
         <button
