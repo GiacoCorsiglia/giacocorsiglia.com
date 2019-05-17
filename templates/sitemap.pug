@@ -1,0 +1,17 @@
+doctype xml
+
+-
+  const entries = [
+    ["", "1"],
+    ["portfolio", "0.1"],
+    ["resume.pdf", "0.5"],
+    ["portfolio/earlier", "0.5"],
+    ["portfolio/fareharbor", "0.9"],
+  ];
+
+urlset(xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+  each entry in entries
+    url
+      loc https://giacocorsiglia.com/#{entry[0]}
+      lastmod= new Date().toISOString().split("T")[0]
+      priority= entry[1]

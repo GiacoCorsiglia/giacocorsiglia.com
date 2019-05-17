@@ -15,6 +15,7 @@ const fsWriteFile = util.promisify(fs.writeFile);
 const PAGES = [
   "index",
   "portfolio",
+  "sitemap",
   "portfolio/earlier",
   "portfolio/fareharbor"
 ];
@@ -83,7 +84,7 @@ function parseOptions() {
 
 function handleClean() {
   const commands = [
-    'find . \\( -name "*.css" -or -name "*.html" -or -name "*.js" -or -name "*.map" \\) -and -type f -delete',
+    'find . \\( -name "*.css" -or -name "*.html" -or -name "*.xml" -or -name "*.js" -or -name "*.map" \\) -and -type f -delete',
     "find . -type d -empty -delete"
   ];
   childProcess.execSync(commands.join(";"), { cwd: OUTPUT_DIR });
@@ -154,7 +155,8 @@ function handleHtml(watch, dev) {
   function buildPage(page) {
     const template = `${page}.pug`;
     const templatePath = path.join(HTML_DIR, template);
-    const outFile = path.join(OUTPUT_DIR, `${page}.html`);
+    const outFileExt = page === "sitemap" ? "xml" : "html";
+    const outFile = path.join(OUTPUT_DIR, `${page}.${outFileExt}`);
 
     const dir = path.dirname(outFile);
     fs.mkdirSync(dir, { recursive: true });
