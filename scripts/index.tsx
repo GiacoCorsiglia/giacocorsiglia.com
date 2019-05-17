@@ -212,6 +212,9 @@ galleries.forEach((gallery, index) => {
     );
     pswp.init();
 
+    document.body.style.overflow = "hidden";
+    pswp.listen("destroy", () => (document.body.style.overflow = "auto"));
+
     // Keep the inline slideshow in sync with the overlay.
     pswp.listen("afterChange", () => goToSlide(pswp.getCurrentIndex()));
     if (wasPlaying) {
