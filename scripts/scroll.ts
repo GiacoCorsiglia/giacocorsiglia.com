@@ -30,6 +30,10 @@ export function watch(
 
   return function unwatch() {
     const index = watchers.indexOf(watcher);
+    if (index === -1) {
+      // It's already been unwatched.
+      return;
+    }
     watchers.splice(index, 1);
     if (watchers.length === 0) {
       window.removeEventListener("scroll", debouncedScrollHandler);
