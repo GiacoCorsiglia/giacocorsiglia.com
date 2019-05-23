@@ -1,7 +1,7 @@
 import * as scroll from "./scroll";
 import * as SimpleDOM from "./simple-dom";
 
-// This is a UMD global not included in the PhotoSwipe type decalarations.
+// This is a UMD global not included in the PhotoSwipe type declarations.
 declare const PhotoSwipeUI_Default: any;
 
 // Helpers.
