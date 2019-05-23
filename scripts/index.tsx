@@ -140,6 +140,7 @@ galleries.forEach(gallery => {
   if (slides.length > 1) {
     // Add spacer slide to preserve the height while the actual slides get
     // positioned absolutely.
+    // Need the cast because cloneNode does not preserve the type of node.
     const spacerSlide = slides[0].cloneNode(true) as HTMLElement;
     spacerSlide.classList.add("gallery__slide--spacer");
     slides[0].before(spacerSlide);
