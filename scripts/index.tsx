@@ -75,7 +75,7 @@ document.body.appendChild(pswpElement);
 
 const galleries = toArray(document.querySelectorAll<HTMLElement>(".gallery"));
 
-galleries.forEach((gallery, index) => {
+galleries.forEach(gallery => {
   /** List of slide <img> elements */
   const slides = toArray(
     gallery.querySelectorAll<HTMLImageElement>(".gallery__slide")
@@ -93,9 +93,6 @@ galleries.forEach((gallery, index) => {
   const pauseButton = gallery.querySelector(".gallery__controls__pause");
   const fullscreenButton = gallery.querySelector(
     ".gallery__controls__fullscreen"
-  );
-  const exitFullscreenButton = gallery.querySelector(
-    ".gallery__controls__exit-fullscreen"
   );
 
   function goToSlide(next: number) {

@@ -37,8 +37,6 @@ mixin gallery(slides)
 
             button.gallery__controls__fullscreen(title="Fullscreen", tabindex=tabindex++,) Fullscreen
 
-            button.gallery__controls__exit-fullscreen(title="Exit Fullscreen", disabled=true, tabindex=tabindex++,) Exit Fullscreen
-
         .image-container
           each slide in slides
             - const [name, ext, alt] = slide
