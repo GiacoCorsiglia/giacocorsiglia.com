@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "author": "Giaco Corsiglia <GiacoCorsiglia@gmail.com>",
   "private": true,
+  "scripts": {
+    "build": "./build --prod"
+  },
   "dependencies": {
     "photoswipe": "^4.1.3"
   },
