@@ -40,8 +40,6 @@
       // angled backgrounds (these are also why we can't set `overflow-x: hidden`
       // on <main>); and (b) galleries which are meant to overflow vertically.
       // Very frustrating.
-      width: 100vw;
-      max-width: 100vw;
       overflow-x: hidden;
     }
   }
