@@ -70,7 +70,7 @@
     display: flex;
     align-content: stretch;
 
-    background: #fff;
+    background: $white;
     border-style: solid;
     border-color: $image-border-color;
     border-width: 1px 1px 0 1px;
@@ -129,7 +129,7 @@
 
       &-active {
         span {
-          border-color: #fff;
+          border-color: $white;
           background: $fareharbor-blue;
         }
 
