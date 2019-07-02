@@ -64,20 +64,12 @@
     color: $text-dark;
 
     @include background-stripe;
+    @extend .indicate-links;
 
     @include small {
       // Let the text wrap naturally at this size.
       br.large-only {
         display: none;
-      }
-    }
-
-    a {
-      border-bottom: 1px solid #bebebe;
-
-      &:hover {
-        text-decoration: none;
-        border-bottom: 1px solid currentColor;
       }
     }
   }
